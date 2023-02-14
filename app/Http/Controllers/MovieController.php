@@ -64,8 +64,7 @@ class MovieController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(Movie $movie)
-    {
-        
+    {    
         return view('movies.show',compact('movie'));
     }
 

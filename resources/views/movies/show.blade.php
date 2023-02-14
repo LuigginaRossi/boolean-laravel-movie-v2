@@ -10,7 +10,9 @@
                     <div class="card-text">{{$movie->description}}</div>
                     <div class="card-text">{{$movie->genre}}</div>
                     <div class="card-text">{{$movie->director}}</div>
-                    <div class="card-text">{{$movie->company->name}}</div>
+                    {{-- @dd($movie->companies) --}}
+                    <div class="card-text">{{$movie->production_company?->name}}</div>
+                    
                     <div class="card-text">{{$movie->release_date}}</div>
                     <div class="card-title">Actor:
                         @foreach ($movie->actors as $actor)

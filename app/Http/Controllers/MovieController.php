@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Actor;
 use App\Models\Movie;
+use App\Models\ProductionCompany;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -28,7 +29,8 @@ class MovieController extends Controller
     public function create()
     {
         $actors=Actor::all();
-        return view("movies.create", compact("actors"));
+        $companies= ProductionCompany::all();
+        return view("movies.create", compact("actors", "companies"));
     }
 
     /**
@@ -44,12 +46,15 @@ class MovieController extends Controller
             ...$data,
             "user_id"=> Auth::id()
         ]);
+
         $actors=Actor::all();
+        $companies= ProductionCompany::all();
 
         if ($request->has("actors")){
             $movie->actors()->attach($data["actors"]);
         }
-        return redirect()->route('movies.show',compact('movie',"actors"));
+
+        return redirect()->route('movies.show',compact('movie','actors', 'companies'));
     }
 
     /**

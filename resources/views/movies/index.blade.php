@@ -3,12 +3,14 @@
 @section('content')
 <div class="container">
     <div class="row">
-        <div class="col">
-            @foreach ($movies as $movie )
-                <div class="card">
-                    <div class="card-body">
-                        <div class="card-title">{{$movie->title}}</div>
-                        <div class="card-text">{{$movie->description}}</div>
+        
+        @foreach ($movies as $movie )
+        <div class="col-sm-3 g-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    <div class="card-title">Title: <h4>{{$movie->title}}</h4></div>
+                    <div class="card-text">Description: <h4>{{$movie->description}}</h4></div>
+                    <div class="py-4">
                         <a method='delete' href="{{ route('movies.destroy', $movie->id) }}" class="btn btn-danger">
                             Delete
                         </a>
@@ -20,8 +22,10 @@
                         </a>
                     </div>
                 </div>
-            @endforeach
+            </div>
         </div>
+        @endforeach
+       
     </div>
 </div>
 @endsection

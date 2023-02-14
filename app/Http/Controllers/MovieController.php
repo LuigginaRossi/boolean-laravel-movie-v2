@@ -42,19 +42,20 @@ class MovieController extends Controller
     public function store(Request $request)
     {
         $data=$request->all();
+        
         $movie= Movie::create([
             ...$data,
-            "user_id"=> Auth::id()
+            "user_id"=> Auth::id(),
+            // "production_company_id" => $data['production_company_id']
         ]);
 
-        $actors=Actor::all();
-        $companies= ProductionCompany::all();
-
+        
         if ($request->has("actors")){
             $movie->actors()->attach($data["actors"]);
         }
-
-        return redirect()->route('movies.show',compact('movie','actors', 'companies'));
+        // dd($movie);
+      
+        return redirect()->route('movies.show',compact('movie'));
     }
 
     /**

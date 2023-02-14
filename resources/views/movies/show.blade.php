@@ -8,11 +8,12 @@
                 <div class="card-body">
                     <div class="card-title">{{$movie->title}}</div>
                     <div class="card-text">{{$movie->description}}</div>
-                    <div class="card-text">{{$movie->genre}}</div>
+                    <div class="card-text">{{$movie->genre?? ''}}</div>
                     <div class="card-text">{{$movie->director}}</div>
                     {{-- @dd($movie->companies) --}}
-                    <div class="card-text">{{$movie->production_company?->name}}</div>
-                    
+                    {{-- @dd($movie) --}}
+                    <div class="card-text">COMPANIES: {{$movie->productionCompany?->name}}</div>
+
                     <div class="card-text">{{$movie->release_date}}</div>
                     <div class="card-title">Actor:
                         @foreach ($movie->actors as $actor)

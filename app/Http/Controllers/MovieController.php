@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Actor;
 use App\Models\Movie;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class MovieController extends Controller
 {
@@ -25,7 +27,8 @@ class MovieController extends Controller
      */
     public function create()
     {
-        return view("movies.create");
+        $actors=Actor::all();
+        return view("movies.create", compact("actors"));
     }
 
     /**
@@ -37,11 +40,16 @@ class MovieController extends Controller
     public function store(Request $request)
     {
         $data=$request->all();
-        $movie=new Movie();
-        $movie->title=$data['title'];
-        $movie->description=$data['description'];
-        $movie->save();
-        return redirect()->route('movies.show',compact('movie'));
+        $movie= Movie::create([
+            ...$data,
+            "user_id"=> Auth::id()
+        ]);
+        $actors=Actor::all();
+
+        if ($request->has("actors")){
+            $movie->actors()->attach($data["actors"]);
+        }
+        return redirect()->route('movies.show',compact('movie',"actors"));
     }
 
     /**
@@ -52,6 +60,7 @@ class MovieController extends Controller
      */
     public function show(Movie $movie)
     {
+        
         return view('movies.show',compact('movie'));
     }
 
@@ -63,7 +72,8 @@ class MovieController extends Controller
      */
     public function edit(Movie $movie)
     {
-        return view('movies.edit',compact('movie'));
+        $actors=Actor::all();
+        return view('movies.edit',compact('movie',"actors"));
     }
 
     /**
@@ -76,10 +86,13 @@ class MovieController extends Controller
     public function update(Request $request, Movie $movie)
     {
         $data=$request->all();
-        $movie->title=$data['title'];
-        $movie->description=$data['description'];
-        $movie->save();
-        return redirect()->route('movies.show',compact('movie'));
+        $movie-> update($data);
+        
+        if ($request->has("actors")){
+           $movie->actors()->sync($data["actors"]);
+        }
+        
+        return redirect()->route('movies.show', compact("movie"));
     }
 
     /**

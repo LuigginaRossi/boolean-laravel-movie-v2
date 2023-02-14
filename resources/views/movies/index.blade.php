@@ -7,7 +7,7 @@
             @foreach ($movies as $movie )
                 <div class="card">
                     <div class="card-body">
-                        <div class="card-title">{{$movie->name}}</div>
+                        <div class="card-title">{{$movie->title}}</div>
                         <div class="card-text">{{$movie->description}}</div>
                         <a method='delete' href="{{ route('movies.destroy', $movie->id) }}" class="btn btn-danger">
                             Delete
